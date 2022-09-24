@@ -7,10 +7,10 @@ class App extends Component {
 	//list: {text: string, isDone: boolean}[] = [];
 	state: {
 		//list: {text: string, isDone: boolean}[],
-		list: TODO_Entry[]
+		TODO_list: TODO_Entry[]
 	} = {
 		//list: [],
-		list: []
+		TODO_list: []
 	};
 	inputText?: string;
 
@@ -25,7 +25,7 @@ class App extends Component {
 				}
 			)});*/
 			this.maxKey += 1;
-			this.setState({list: this.state.list.concat(
+			this.setState({TODO_list: this.state.TODO_list.concat(
 				new TODO_Entry({
 					text: this.inputText,
 					parent: this
@@ -38,10 +38,10 @@ class App extends Component {
 		/*let newList = this.state.list.filter((item, index) => {
 			item.key
 		});*/
-		let editedList = this.state.list.filter((item) => !(item.toBeRemoved));
-		if (!this.state.list.every((val, index) => val === editedList[index])) {
+		let editedList = this.state.TODO_list.filter((item) => !(item.toBeRemoved));
+		if (!this.state.TODO_list.every((val, index) => val === editedList[index])) {
 			this.setState({
-				list: editedList
+				TODO_list: editedList
 			});
 		}
 	}
@@ -51,7 +51,7 @@ class App extends Component {
 		);*/
 		//console.log(finalList);
 		//this._check_to_remove();
-		const finalList: JSX.Element[] = this.state.list.map(
+		const finalList: JSX.Element[] = this.state.TODO_list.map(
 			(entry) => entry.render()
 		);
 		console.log("Re-rendered App");
