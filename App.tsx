@@ -57,10 +57,10 @@ class App extends Component {
 		console.log("Re-rendered App");
 		return (
 			<View style={styles.container}>
-				<View style={{alignContent: "flex-start"}}>
+				<View style={{justifyContent: "center", alignItems: "center", width:"100%"}}>
 					{finalList}
 				</View>
-				<TextInput onChangeText={(text) => {this.inputText = text;}} placeholder="What do you want to save on the list?" style={[styles.input, {marginVertical: 7.5}]}/>
+				<TextInput onChangeText={(text) => {this.inputText = text;}} placeholder="TODO: " style={[styles.input, {marginVertical: 7.5}]}/>
 				<Pressable onPress={() => {this._add_to_list()}} style={styles.pressable}><Text>Add to TODO list</Text></Pressable>
 				<StatusBar style="auto" />
 			</View>
@@ -90,6 +90,13 @@ class TODO_Entry extends Component<TODO_Entry_Props> {
 			borderColor: "#aebdd0", /* This color is a modified version of #block_button from WebBlocker */
 			borderWidth: 2,
 			backgroundColor: "#ced7e3"
+		},
+		BouncyStyle: {
+			backgroundColor: "#aaa",
+			paddingHorizontal: 3
+		},
+		BouncyText: {
+			color: "#222"
 		}
 	});
 
@@ -104,7 +111,7 @@ class TODO_Entry extends Component<TODO_Entry_Props> {
 	render() {
 		return (
 			<View style={{flexDirection: "row", margin: 2}} key={this.key}>
-				<BouncyCheckbox text={this.text} onPress={(isChecked) => {this.done = isChecked;}} />
+				<BouncyCheckbox text={this.text} fillColor="black" textStyle={this.styles.BouncyText} style={this.styles.BouncyStyle} onPress={(isChecked) => {this.done = isChecked;}} />
 				<Pressable style={this.styles.pressableStyle} onPress={() => {this.toBeRemoved = true;this.parent.check_to_remove()}}>
 					<Text>
 						Remove
@@ -119,16 +126,17 @@ class TODO_Entry extends Component<TODO_Entry_Props> {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#888',
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
 	input: {
-		width: "30%",
+		width: "50%",
 		textAlign: 'center',
 		borderWidth: 1,
 		padding: 5,
-		placeholderTextColor: "#999"
+		placeholderTextColor: "#999",
+		backgroundColor: "#bbb",
 	},
 	pressable: {
 		width: "30%",
