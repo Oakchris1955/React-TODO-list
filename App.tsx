@@ -102,9 +102,9 @@ class TODO_Entry extends Component<TODO_Entry_Props> {
 
 	constructor(props: TODO_Entry_Props) {
 		super(props);
-		this.done = typeof this.props.isDone === "undefined" ? true : false;
-		this.text = this.props.text;
-		this.parent = this.props.parent;
+		this.done = typeof props.isDone === "undefined" ? true : false;
+		this.text = props.text;
+		this.parent = props.parent;
 		this.key = this.parent.maxKey;
 	}
 
