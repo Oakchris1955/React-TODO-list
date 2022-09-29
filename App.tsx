@@ -1,7 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
+import React, { useEffect ,Component } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+interface DeserialisedList {
+	TODO_list: {
+		text: string,
+		isDone: boolean
+	}[]
+}
 
 class App extends Component {
 	//list: {text: string, isDone: boolean}[] = [];
@@ -12,9 +20,63 @@ class App extends Component {
 		//list: [],
 		TODO_list: []
 	};
-	inputText?: string;
 
+	inputText?: string;
 	maxKey: number = 0;
+
+	
+	constructor(props: any) {
+		super(props);
+		this._readStorage()
+		.then((todo_list) => {
+			console.log(todo_list);
+			this.setState({TODO_list: todo_list.map(
+				(item) => {
+					return new TODO_Entry({
+						text: item.text,
+						parent: this,
+						isDone: item.isDone
+					})
+				})
+			});
+		})
+		.catch();
+	}
+
+
+	
+	async _readStorage() {
+		try {
+			const value = await AsyncStorage.getItem("TODO_list");
+			if (value !== null) {
+				let DeserialisedValue: DeserialisedList = JSON.parse(value);
+				console.log(`Loaded ${DeserialisedValue}`);
+				console.log(DeserialisedValue);
+				return DeserialisedValue.TODO_list;
+			} else {
+				return [] as DeserialisedList["TODO_list"]
+			}
+		} catch(err) {
+			throw err
+		}
+	}
+
+	componentDidUpdate() {
+		this._saveStorage().catch();
+	}
+
+	async _saveStorage() {
+		try {
+			let props_list = this.state.TODO_list.map(
+				(item) => item.getInfo()
+			);
+			let SerialisedList = JSON.stringify({TODO_list: props_list});
+			console.log(`Saved ${SerialisedList}`);
+			await AsyncStorage.setItem("TODO_list", SerialisedList);
+		} catch(err) {
+			throw err
+		}
+	}
 
 	_add_to_list() {
 		if (typeof this.inputText !== "undefined") {
@@ -106,6 +168,13 @@ class TODO_Entry extends Component<TODO_Entry_Props> {
 		this.text = props.text;
 		this.parent = props.parent;
 		this.key = this.parent.maxKey;
+	}
+
+	getInfo(): DeserialisedList["TODO_list"][0] {
+		return {
+			text: this.text,
+			isDone: this.done
+		};
 	}
 
 	render() {

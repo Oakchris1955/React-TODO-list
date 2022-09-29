@@ -9,19 +9,20 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@babel/core": "^7.12.9",
     "@expo/webpack-config": "^0.17.0",
+    "@react-native-async-storage/async-storage": "^1.17.10",
+    "@types/jest": "^29.0.0",
+    "@types/react": "^18.0.18",
+    "@types/react-native": "^0.69.8",
+    "@types/react-test-renderer": "^18.0.0",
     "expo": "~46.0.9",
     "expo-status-bar": "~1.4.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-native": "0.69.5",
-    "react-native-web": "~0.18.7",
     "react-native-bouncy-checkbox": "^3.0.4",
-    "@babel/core": "^7.12.9",
-    "@types/jest": "^29.0.0",
-    "@types/react": "^18.0.18",
-    "@types/react-native": "^0.69.8",
-    "@types/react-test-renderer": "^18.0.0",
+    "react-native-web": "~0.18.7",
     "typescript": "^4.8.3"
   },
   "private": true
