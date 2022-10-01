@@ -15,3 +15,5 @@ web-build/
 
 # User-defined
 package-lock.json
+android/
+app.json
