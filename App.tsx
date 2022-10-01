@@ -123,7 +123,7 @@ class App extends Component {
 					{finalList}
 				</View>
 				<TextInput onChangeText={(text) => {this.inputText = text;}} onSubmitEditing={() => {this._add_to_list()}} placeholder="TODO: " style={[styles.input, {marginVertical: 7.5}]}/>
-				<Pressable onPress={() => {this._add_to_list()}} style={styles.pressable}><Text>Add to TODO list</Text></Pressable>
+				<Pressable onPress={() => {this._add_to_list()}} style={styles.pressable}><Text style={{textAlign: 'center'}}>Add to TODO list</Text></Pressable>
 				<StatusBar style="auto" />
 			</View>
 		);
@@ -209,7 +209,6 @@ const styles = StyleSheet.create({
 	},
 	pressable: {
 		width: "30%",
-		textAlign: "center",
 		backgroundColor: "#ccc",
 		padding: 3,
 		fontSize: 15
