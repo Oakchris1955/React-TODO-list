@@ -86,7 +86,6 @@ class App extends Component {
 					isDone: false
 				}
 			)});*/
-			this.maxKey += 1;
 			this.setState({TODO_list: this.state.TODO_list.concat(
 				new TODO_Entry({
 					text: this.inputText,
@@ -167,7 +166,7 @@ class TODO_Entry extends Component<TODO_Entry_Props> {
 		this.done = typeof props.isDone === "undefined" ? true : false;
 		this.text = props.text;
 		this.parent = props.parent;
-		this.key = this.parent.maxKey;
+		this.key = this.parent.maxKey += 1;
 	}
 
 	getInfo(): DeserialisedList["TODO_list"][0] {
