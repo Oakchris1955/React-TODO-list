@@ -33,6 +33,7 @@ class App extends Component {
 			this.setState({TODO_list: todo_list.map(
 				(item) => {
 					return new TODO_Entry({
+					console.log(`${item.text}: ${item.isDone}`);
 						text: item.text,
 						parent: this,
 						isDone: item.isDone
@@ -62,10 +63,10 @@ class App extends Component {
 	}
 
 	componentDidUpdate() {
-		this._saveStorage().catch();
+		this.saveStorage().catch();
 	}
 
-	async _saveStorage() {
+	async saveStorage() {
 		try {
 			let props_list = this.state.TODO_list.map(
 				(item) => item.getInfo()
@@ -163,7 +164,7 @@ class TODO_Entry extends Component<TODO_Entry_Props> {
 
 	constructor(props: TODO_Entry_Props) {
 		super(props);
-		this.done = typeof props.isDone === "undefined" ? true : false;
+		this.done = typeof props.isDone === "undefined" ? false : props.isDone;
 		this.text = props.text;
 		this.parent = props.parent;
 		this.key = this.parent.maxKey += 1;
@@ -179,7 +180,7 @@ class TODO_Entry extends Component<TODO_Entry_Props> {
 	render() {
 		return (
 			<View style={{flexDirection: "row", margin: 2}} key={this.key}>
-				<BouncyCheckbox text={this.text} fillColor="black" textStyle={this.styles.BouncyText} style={this.styles.BouncyStyle} onPress={(isChecked) => {this.done = isChecked;}} />
+				<BouncyCheckbox text={this.text} fillColor="black" textStyle={this.styles.BouncyText} style={this.styles.BouncyStyle} onPress={(isChecked) => {this.done = isChecked;this.parent.saveStorage()}} isChecked={this.done} />
 				<Pressable style={this.styles.pressableStyle} onPress={() => {this.toBeRemoved = true;this.parent.check_to_remove()}}>
 					<Text>
 						Remove
