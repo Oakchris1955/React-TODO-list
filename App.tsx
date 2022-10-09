@@ -32,8 +32,8 @@ class App extends Component {
 			console.log(todo_list);
 			this.setState({TODO_list: todo_list.map(
 				(item) => {
-					return new TODO_Entry({
 					console.log(`${item.text}: ${item.isDone}`);
+					return new TODO_Entry({
 						text: item.text,
 						parent: this,
 						isDone: item.isDone
