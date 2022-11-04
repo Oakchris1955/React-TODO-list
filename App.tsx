@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, Component } from 'react';
-import { Button, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { Component } from 'react';
+import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ModalDropdown from 'react-native-modal-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
