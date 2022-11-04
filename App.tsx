@@ -17,19 +17,19 @@ interface DeserialisedStorage {
 	LastOpened: string
 }
 
+enum ModalState {
+	Hidden,
+	Insert,
+	Remove
+}
+
 class App extends Component {
 	state: {
 		CurrentList: Entry[],
-		modalStates: {
-			remove: boolean,
-			append: boolean
-		}
+		modalState: ModalState
 	} = {
 		CurrentList: [],
-		modalStates: {
-			remove: false,
-			append: false
-		}
+		modalState: ModalState.Hidden
 	};
 
 	inputText?: string;
@@ -173,31 +173,31 @@ class App extends Component {
 			}
 		);
 		console.log("Re-rendered App");
-		console.log(this.state.modalStates);
+		console.log(`Current modal state: ${ModalState[this.state.modalState]}`);
 
 		return (
 			<View style={styles.container}>
 				<View style={styles.DropdownContainer}>
-					<Pressable style={{marginHorizontal: "5%", minWidth: "5%"}} onPress={() => this.setState({modalStates: {remove: true, append: false}})/*this.state.modalObject.changeStatus(ModalStatus.Add)*/}><Text>-</Text></Pressable>
+					<Pressable style={{marginHorizontal: "5%", minWidth: "5%"}} onPress={() => this.setState({modalState: ModalState.Remove})/*this.state.modalObject.changeStatus(ModalStatus.Add)*/}><Text>-</Text></Pressable>
 					<ModalDropdown onSelect={(_, selectedString) => {if (selectedString != this.savedStorage.LastOpened) this.changeList(selectedString)}} textStyle={{minWidth: 40, borderColor: "purple", borderWidth: 2, borderRadius: 20}} dropdownStyle={styles.DropdownStyle} defaultValue={this.savedStorage.LastOpened} options={Object.keys(this.savedStorage.SavedLists)}/>
-					<Pressable style={{marginHorizontal: "5%", minWidth: "5%"}} onPress={() => this.setState({modalStates: {remove: false, append: true}})}><Text>+</Text></Pressable>
+					<Pressable style={{marginHorizontal: "5%", minWidth: "5%"}} onPress={() => this.setState({modalState: ModalState.Insert})}><Text>+</Text></Pressable>
 				</View>
 				
-				<Modal visible={this.state.modalStates.remove} animationType="fade" transparent={true}>
+				<Modal visible={this.state.modalState == ModalState.Remove} animationType="fade" transparent={true}>
 					<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 						<View style={{backgroundColor: "white", borderRadius: 20, padding: 20, justifyContent: "center", alignItems: "center"}}>
 							<Text>
 								Please select an element to remove:
 							</Text>
 							{finalListRemovableNames}
-							<Pressable style={{borderColor: "lightblue", backgroundColor: "lightblue", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2}} onPress={() => this.setState({modalStates: {remove: false, append: false}})}>
+							<Pressable style={{borderColor: "lightblue", backgroundColor: "lightblue", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2}} onPress={() => this.setState({modalState: ModalState.Hidden})}>
 								<Text>Close</Text>
 							</Pressable>
 						</View>
 					</View>
 				</Modal>
 
-				<Modal visible={this.state.modalStates.append} animationType="fade" transparent={true}>
+				<Modal visible={this.state.modalState == ModalState.Insert} animationType="fade" transparent={true}>
 					<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 						<View style={{backgroundColor: "white", borderRadius: 20, padding: 20, justifyContent: "center", alignItems: "center"}}>
 							<View style={{flexDirection: "row", marginBottom: 5}}>
@@ -209,7 +209,7 @@ class App extends Component {
 								</View>
 								<View>{finalListNames}</View>
 							</View>
-							<Pressable style={{borderColor: "lightblue", backgroundColor: "lightblue", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2}} onPress={() => this.setState({modalStates: {remove: false, append: false}})}>
+							<Pressable style={{borderColor: "lightblue", backgroundColor: "lightblue", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2}} onPress={() => this.setState({modalState: ModalState.Hidden})}>
 								<Text>Close</Text>
 							</Pressable>
 						</View>
