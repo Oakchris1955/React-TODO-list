@@ -179,7 +179,7 @@ class App extends Component {
 			<View style={styles.container}>
 				<View style={styles.DropdownContainer}>
 					<Pressable style={{marginHorizontal: "5%", minWidth: "5%"}} onPress={() => this.setState({modalState: ModalState.Remove})/*this.state.modalObject.changeStatus(ModalStatus.Add)*/}><Text>-</Text></Pressable>
-					<ModalDropdown onSelect={(_, selectedString) => {if (selectedString != this.savedStorage.LastOpened) this.changeList(selectedString)}} textStyle={{minWidth: 40, borderColor: "purple", borderWidth: 2, borderRadius: 20}} dropdownStyle={styles.DropdownStyle} defaultValue={this.savedStorage.LastOpened} options={Object.keys(this.savedStorage.SavedLists)}/>
+					<ModalDropdown onSelect={(_, selectedString) => {if (selectedString != this.savedStorage.LastOpened) this.changeList(selectedString)}} textStyle={{minWidth: 40, borderColor: "purple", borderWidth: 2, borderRadius: 20, paddingHorizontal: 5}} dropdownStyle={styles.DropdownStyle} defaultValue={this.savedStorage.LastOpened} options={Object.keys(this.savedStorage.SavedLists)}/>
 					<Pressable style={{marginHorizontal: "5%", minWidth: "5%"}} onPress={() => this.setState({modalState: ModalState.Insert})}><Text>+</Text></Pressable>
 				</View>
 				
@@ -190,7 +190,7 @@ class App extends Component {
 								Please select an element to remove:
 							</Text>
 							{finalListRemovableNames}
-							<Pressable style={{borderColor: "lightblue", backgroundColor: "lightblue", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2}} onPress={() => this.setState({modalState: ModalState.Hidden})}>
+							<Pressable style={{borderColor: "lightblue", backgroundColor: "lightblue", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2, marginTop: 7}} onPress={() => this.setState({modalState: ModalState.Hidden})}>
 								<Text>Close</Text>
 							</Pressable>
 						</View>
@@ -201,9 +201,9 @@ class App extends Component {
 					<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 						<View style={{backgroundColor: "white", borderRadius: 20, padding: 20, justifyContent: "center", alignItems: "center"}}>
 							<View style={{flexDirection: "row", marginBottom: 5}}>
-								<View style={{alignItems: "center"}}>
+								<View style={{alignItems: "center", alignSelf: "center"}}>
 									<TextInput placeholder='New list name:' onChangeText={(text) => this.appendModalInputText = text === "" ? null : text}/>
-									<Pressable style={{borderColor: "lightgreen", backgroundColor: "lightgreen", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2}} onPress={() => {if (this.appendModalInputText != null) this.newList(this.appendModalInputText)}}>
+									<Pressable style={{borderColor: "lightgreen", backgroundColor: "lightgreen", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2}} onPress={() => {if (this.appendModalInputText != null) {this.newList(this.appendModalInputText);this.forceUpdate()}}}>
 										<Text>Create new list</Text>
 									</Pressable>
 								</View>
@@ -255,6 +255,7 @@ class CustomDisplay extends Component<CustomDisplayProps> {
 			borderColor: "lightgrey",
 			borderWidth: 2,
 			borderRadius: 15,
+			paddingHorizontal: 5,
 			minWidth: 50
 		}
 	});
@@ -263,7 +264,7 @@ class CustomDisplay extends Component<CustomDisplayProps> {
 		return (
 			<View style={this.styles.parentView}>
 				<Text style={this.styles.children}>{this.text}</Text>
-				{this.removable ? <Pressable onPress={() => {this.parent.removeList(this.text);}}><Icon name='close' size={20}/></Pressable> : null}
+				{this.removable ? <Pressable onPress={() => {this.parent.removeList(this.text);this.parent.forceUpdate()}}><Icon name='close' size={20}/></Pressable> : null}
 			</View>
 		)
 	}
