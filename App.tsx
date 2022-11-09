@@ -179,7 +179,7 @@ class App extends Component {
 			<View style={styles.container}>
 				<View style={styles.DropdownContainer}>
 					<Pressable style={{marginHorizontal: "5%", minWidth: "5%"}} onPress={() => this.setState({modalState: ModalState.Remove})/*this.state.modalObject.changeStatus(ModalStatus.Add)*/}><Text>-</Text></Pressable>
-					<ModalDropdown onSelect={(_, selectedString) => {if (selectedString != this.savedStorage.LastOpened) this.changeList(selectedString)}} textStyle={{minWidth: 40, borderColor: "purple", borderWidth: 2, borderRadius: 20, paddingHorizontal: 5}} dropdownStyle={styles.DropdownStyle} defaultValue={this.savedStorage.LastOpened} options={Object.keys(this.savedStorage.SavedLists)}/>
+					<ModalDropdown onSelect={(_, selectedString) => {if (selectedString != this.savedStorage.LastOpened) this.changeList(selectedString)}} textStyle={{minWidth: 40, borderColor: "#99994d", borderWidth: 2, borderRadius: 20, paddingHorizontal: 5}} dropdownStyle={styles.DropdownStyle} defaultValue={this.savedStorage.LastOpened} options={Object.keys(this.savedStorage.SavedLists)}/>
 					<Pressable style={{marginHorizontal: "5%", minWidth: "5%"}} onPress={() => this.setState({modalState: ModalState.Insert})}><Text>+</Text></Pressable>
 				</View>
 				
@@ -202,7 +202,9 @@ class App extends Component {
 						<View style={{backgroundColor: "white", borderRadius: 20, padding: 20, justifyContent: "center", alignItems: "center"}}>
 							<View style={{flexDirection: "row", marginBottom: 5}}>
 								<View style={{alignItems: "center", alignSelf: "center"}}>
-									<TextInput placeholder='New list name:' onChangeText={(text) => this.appendModalInputText = text === "" ? null : text}/>
+									<View style={{borderColor: "black", borderWidth: 1, borderRadius: 10, marginBottom: 3}}>
+										<TextInput placeholder='New list name:' style={{marginHorizontal: 4}} onChangeText={(text) => this.appendModalInputText = text === "" ? null : text}/>
+									</View>
 									<Pressable style={{borderColor: "lightgreen", backgroundColor: "lightgreen", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2}} onPress={() => {if (this.appendModalInputText != null) {this.newList(this.appendModalInputText);this.forceUpdate()}}}>
 										<Text>Create new list</Text>
 									</Pressable>
@@ -295,7 +297,7 @@ class Entry extends Component<Entry_Props> {
 			backgroundColor: "#ced7e3"
 		},
 		BouncyStyle: {
-			backgroundColor: "#aaa",
+			backgroundColor: "#6699cc",
 			paddingHorizontal: 3
 		},
 		BouncyText: {
@@ -336,7 +338,7 @@ class Entry extends Component<Entry_Props> {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#888',
+		backgroundColor: '#0099cc',
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
@@ -346,7 +348,7 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		padding: 5,
 		placeholderTextColor: "#999",
-		backgroundColor: "#bbb",
+		backgroundColor: "#94b8d1",
 	},
 	pressable: {
 		width: "30%",
