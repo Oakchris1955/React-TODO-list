@@ -219,8 +219,8 @@ class App extends Component {
 				<View style={{justifyContent: "center", alignItems: "center", width:"100%"}}>
 					{finalList}
 				</View>
-				<TextInput onChangeText={(text) => {this.inputText = text;}} onSubmitEditing={() => {this._add_to_list()}} placeholder="TODO: " style={[styles.input, {marginVertical: 7.5}]}/>
-				<Pressable onPress={() => {this._add_to_list()}} style={styles.pressable}><Text style={{textAlign: 'center'}}>Add to TODO list</Text></Pressable>
+				<TextInput onChangeText={(text) => {this.inputText = text;}} onSubmitEditing={() => {this._add_to_list()}} placeholder="New item:" style={[styles.input, {marginVertical: 7.5}]}/>
+				<Pressable onPress={() => {this._add_to_list()}} style={styles.pressable}><Text style={{textAlign: 'center'}}>Add to list</Text></Pressable>
 				<StatusBar style="auto" />
 			</View>
 		);
