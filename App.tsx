@@ -165,6 +165,8 @@ class App extends Component {
 			(key) => {
 				return (key !== this.savedStorage.LastOpened ? <CustomDisplay text={key} removable={true} parent={this} key={this.maxKey+=1}/> : null)
 			}
+		).filter(
+			(value) => value !== null
 		);
 
 		const finalListNames = Object.keys(this.savedStorage.SavedLists).map(
@@ -189,7 +191,7 @@ class App extends Component {
 							<Text>
 								Please select an element to remove:
 							</Text>
-							{finalListRemovableNames}
+							{finalListRemovableNames.length !== 0 ? finalListRemovableNames : <Text style={{fontStyle: 'italic'}}>Nothing to remove</Text>}
 							<Pressable style={{borderColor: "lightblue", backgroundColor: "lightblue", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2, marginTop: 7}} onPress={() => this.setState({modalState: ModalState.Hidden})}>
 								<Text>Close</Text>
 							</Pressable>
