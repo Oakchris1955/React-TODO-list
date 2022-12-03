@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ModalDropdown from 'react-native-modal-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -163,17 +163,20 @@ class App extends Component {
 
 		const finalListRemovableNames = Object.keys(this.savedStorage.SavedLists).map(
 			(key) => {
-				return (key !== this.savedStorage.LastOpened ? <CustomDisplay text={key} removable={true} parent={this} key={this.maxKey+=1}/> : null)
+				return (key !== this.savedStorage.LastOpened ? <CustomDisplay text={key} parent={this} key={this.maxKey+=1}/> : null)
 			}
 		).filter(
 			(value) => value !== null
 		);
 
-		const finalListNames = Object.keys(this.savedStorage.SavedLists).map(
-			(key) => {
-				return <CustomDisplay text={key} removable={false} parent={this} key={this.maxKey+=1}/>
-			}
+		const ScrollViewRender = (item: string) => <Text style={{backgroundColor: "#dcdcdc", margin: 1, paddingHorizontal: 3, borderRadius: 4}}>{item}</Text>;
+
+		const finalListNames = (
+			<ScrollView style={{maxHeight: 100}}>
+				{Object.keys(this.savedStorage.SavedLists).map(ScrollViewRender)}
+			</ScrollView>
 		);
+
 		console.log("Re-rendered App");
 		console.log(`Current modal state: ${ModalState[this.state.modalState]}`);
 
@@ -211,7 +214,7 @@ class App extends Component {
 										<Text>Create new list</Text>
 									</Pressable>
 								</View>
-								<View>{finalListNames}</View>
+								<View style={{marginHorizontal: 5, marginVertical: 2}}>{finalListNames}</View>
 							</View>
 							<Pressable style={{borderColor: "lightblue", backgroundColor: "lightblue", borderWidth: 4, borderRadius: 35, paddingHorizontal: 2}} onPress={() => this.setState({modalState: ModalState.Hidden})}>
 								<Text>Close</Text>
@@ -233,20 +236,17 @@ class App extends Component {
 
 interface CustomDisplayProps {
 	text: string,
-	removable: boolean,
 	parent: App
 }
 
 class CustomDisplay extends Component<CustomDisplayProps> {
 	parent: App;
 	text: string;
-	removable: boolean;
 
 	constructor(props: CustomDisplayProps) {
 		super(props);
 		this.parent = this.props.parent;
 		this.text = this.props.text;
-		this.removable =  this.props.removable;
 	}
 
 	styles = StyleSheet.create({
@@ -268,7 +268,7 @@ class CustomDisplay extends Component<CustomDisplayProps> {
 		return (
 			<View style={this.styles.parentView}>
 				<Text style={this.styles.children}>{this.text}</Text>
-				{this.removable ? <Pressable onPress={() => {this.parent.removeList(this.text);this.parent.forceUpdate()}}><Icon name='close' size={20}/></Pressable> : null}
+				<Pressable onPress={() => {this.parent.removeList(this.text);this.parent.forceUpdate()}}><Icon name='close' size={20}/></Pressable>
 			</View>
 		)
 	}
