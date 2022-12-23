@@ -17,3 +17,4 @@ web-build/
 package-lock.json
 android/
 app.json
+.expo-shared/
